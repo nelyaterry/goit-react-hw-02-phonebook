@@ -1,17 +1,28 @@
-const Contacts = ({ contacts }) => {
+import {
+  ContacstList,
+  Contact,
+  ContactName,
+  ContactPhone,
+  Button,
+  MessageNotFound,
+} from "./Contacts.styled";
+const Contacts = ({ contacts, handleDeleteContact }) => {
   console.log(contacts);
   return (
     // <p>helloWorld {contacts[0]}</p>
-
-    <ul>
-      {contacts.map(({ name, number, id }) => (
-        <li key={id}>
-          <p>{name}</p>
-          <p>{number}</p>
-          <button>Delete</button>
-        </li>
-      ))}
-    </ul>
+    contacts.length > 0 ? (
+      <ContacstList>
+        {contacts.map(({ name, number, id }) => (
+          <Contact key={id}>
+            <ContactName>{name}</ContactName>
+            <ContactPhone>{number}</ContactPhone>
+            <Button onClick={() => handleDeleteContact(id)}>Delete</Button>
+          </Contact>
+        ))}
+      </ContacstList>
+    ) : (
+      <MessageNotFound>Contact not found</MessageNotFound>
+    )
   );
 };
 

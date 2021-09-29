@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { Form, Label, InputName, Input, Button } from "./ContactForm.styled";
+
 export default class ContactForm extends Component {
   state = {
     name: "",
@@ -30,10 +32,10 @@ export default class ContactForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handelSubmit}>
-        <label>
-          Name
-          <input
+      <Form onSubmit={this.handelSubmit}>
+        <Label>
+          <InputName>Name</InputName>
+          <Input
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -42,11 +44,11 @@ export default class ContactForm extends Component {
             value={this.state.name}
             onChange={this.handelChange}
           />
-        </label>
+        </Label>
 
-        <label>
-          Number
-          <input
+        <Label>
+          <InputName>Number</InputName>
+          <Input
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -55,10 +57,10 @@ export default class ContactForm extends Component {
             value={this.state.number}
             onChange={this.handelChange}
           />
-        </label>
+        </Label>
 
-        <button type="submit">Add Contact</button>
-      </form>
+        <Button type="submit">Add Contact</Button>
+      </Form>
     );
   }
 }

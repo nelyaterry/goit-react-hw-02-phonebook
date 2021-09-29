@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Title } from "./App.styled";
+import { Phonebook, Title, SubTitle, ContactBox } from "./App.styled";
 import ContactForm from "../ContactForm/ContactForm";
 import Contacts from "../Contacts/Contacts";
+import Filter from "../Filter/Filter";
 
 export default class App extends Component {
   state = {
@@ -11,38 +12,54 @@ export default class App extends Component {
       { id: "id-3", name: "Eden Clements", number: "645-17-79" },
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
+
+    filter: "",
   };
 
   formSubmitHandler = (data) => {
-    console.log(data);
-    this.setState((prevState) => ({
-      contacts: [...prevState.contacts, data],
-    }));
-    console.log(this.state);
+    !this.state.contacts.some((contact) => contact.name === data.name)
+      ? this.setState((prevState) => ({
+          contacts: [...prevState.contacts, data],
+        }))
+      : alert(` ${data.name} is alredy in the contacts list`);
   };
 
-  deleteContact = (id) => {
+  handleDeleteContact = (id) => {
     this.setState((prevState) => ({
       contacts: prevState.contacts.filter((contact) => contact.id !== id),
     }));
   };
 
+  changeFilter = (e) => {
+    console.log(e);
+    this.setState({ filter: e.target.value });
+  };
+
+  getFilteredContacts = () => {
+    const { filter, contacts } = this.state;
+    const filterNormalized = filter.toLowerCase();
+
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filterNormalized)
+    );
+  };
+
   render() {
+    const { filter } = this.state;
     return (
       <>
         <Title>Phonebook</Title>
-        <ContactForm onSubmit={this.formSubmitHandler} />
-        <Title>Contacts</Title>
-        <Contacts contacts={this.state.contacts} />
-        {/* <ul>
-          {this.state.contacts.map(({ name, number, id }) => (
-            <li key={id}>
-              <p>{name}</p>
-              <p>{number}</p>
-              <button>Delete</button>
-            </li>
-          ))}
-        </ul> */}
+        <Phonebook>
+          <ContactForm onSubmit={this.formSubmitHandler} />
+          <ContactBox>
+            <SubTitle>Contacts</SubTitle>
+            <Filter value={filter} changeFilter={this.changeFilter} />
+            <Contacts
+              contacts={this.getFilteredContacts()}
+              handleDeleteContact={this.handleDeleteContact}
+            />
+          </ContactBox>
+        </Phonebook>
       </>
     );
   }
