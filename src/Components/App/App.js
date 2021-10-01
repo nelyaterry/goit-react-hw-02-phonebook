@@ -17,7 +17,9 @@ export default class App extends Component {
   };
 
   formSubmitHandler = (data) => {
-    !this.state.contacts.some((contact) => contact.name === data.name)
+    !this.state.contacts.some(
+      (contact) => contact.name.toLowerCase() === data.name.toLowerCase()
+    )
       ? this.setState((prevState) => ({
           contacts: [...prevState.contacts, data],
         }))
@@ -31,7 +33,6 @@ export default class App extends Component {
   };
 
   changeFilter = (e) => {
-    console.log(e);
     this.setState({ filter: e.target.value });
   };
 

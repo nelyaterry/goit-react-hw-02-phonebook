@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import PropTypes from "prop-types";
+
 import { Form, Label, InputName, Input, Button } from "./ContactForm.styled";
 
 export default class ContactForm extends Component {
@@ -64,3 +66,7 @@ export default class ContactForm extends Component {
     );
   }
 }
+
+Form.propTypes = {
+  onSubmit: PropTypes.func,
+};

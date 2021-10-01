@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import {
   ContacstList,
   Contact,
@@ -6,8 +8,8 @@ import {
   Button,
   MessageNotFound,
 } from "./Contacts.styled";
+
 const Contacts = ({ contacts, handleDeleteContact }) => {
-  console.log(contacts);
   return (
     // <p>helloWorld {contacts[0]}</p>
     contacts.length > 0 ? (
@@ -27,3 +29,8 @@ const Contacts = ({ contacts, handleDeleteContact }) => {
 };
 
 export default Contacts;
+
+Contacts.propTypes = {
+  contacts: PropTypes.array,
+  handleDeleteContact: PropTypes.func,
+};
